@@ -74,4 +74,13 @@
     <servlet-name>NewUpload</servlet-name>
     <url-pattern>/NewUpload</url-pattern>
   </servlet-mapping>
+  <servlet>
+  	<display-name>GetHistoric</display-name>
+  	<servlet-name>GetHistoric</servlet-name>
+  	<servlet-class>com.clopez.homemonitor.GetHistoric</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>GetHistoric</servlet-name>
+  	<url-pattern>/GetHistoric</url-pattern>
+  </servlet-mapping>
 </web-app>
