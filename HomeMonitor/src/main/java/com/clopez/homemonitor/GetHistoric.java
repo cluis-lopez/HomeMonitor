@@ -76,8 +76,8 @@ public class GetHistoric extends HttpServlet {
 		resp.setHeader("cache-control", "no-cache");
 		resp.getWriter().write(json);
 		resp.flushBuffer();
-		//System.out.println("Enviado JSON Chart");
-		//System.out.println(json);
+		System.out.println("Enviado JSON Chart");
+		System.out.println(json);
 
 	}
 }
