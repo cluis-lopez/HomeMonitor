@@ -189,7 +189,9 @@
 									</div>
 								</div>
 								<div class="panel-body">
-									<div id="mainchart"></div>
+									<div id="mainchart">
+										<img class="center-block" src="img/loading.gif">
+									</div>
 								</div>
 							</div>
 						</div>
@@ -239,6 +241,7 @@
 
 					$.get("ChartData", function(responseJson) {
 						chartdata = responseJson;
+						$("#mainchart").html("");
 						chart = Morris.Line({
 					  	  	element: 'mainchart',
 					  	 	data: chartdata,

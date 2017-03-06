@@ -48,7 +48,7 @@ public class GetHistoric extends HttpServlet {
 		if (ents.size() == 0) { // No entries in the datastore ??
 			error = "Not historic records in the datastore";
 		} else {
-			for (int i = ents.size() - 1; i >= 0; i--) { // Reverse the order to
+			for (int i = 0; i < ents.size(); i++) { // Reverse the order to
 															// get last item in
 															// DS last
 				try {
