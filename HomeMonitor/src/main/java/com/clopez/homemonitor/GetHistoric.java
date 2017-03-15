@@ -50,7 +50,7 @@ public class GetHistoric extends HttpServlet {
 		} else {
 			for (int i = 0; i < ents.size(); i++) { // Reverse the order to
 															// get last item in
-															// DS last
+															// DS first
 				try {
 					e = ds.get((ents.get(i)).getKey());
 					Map<String, Object> mapa = new HashMap<String, Object>();
