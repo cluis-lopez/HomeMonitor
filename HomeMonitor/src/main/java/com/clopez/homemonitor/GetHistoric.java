@@ -30,6 +30,7 @@ public class GetHistoric extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse resp) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
@@ -55,9 +56,9 @@ public class GetHistoric extends HttpServlet {
 					e = ds.get((ents.get(i)).getKey());
 					Map<String, Object> mapa = new HashMap<String, Object>();
 					mapa.put("Ts", e.getKey().getName());
-					mapa.put("Temp", (Double) e.getProperty("Temp"));
-					mapa.put("Hum", (Double) e.getProperty("Hum"));
-					mapa.put("Light", (Double) e.getProperty("Light"));
+					mapa.put("Temp", e.getProperty("Temp"));
+					mapa.put("Hum", e.getProperty("Hum"));
+					mapa.put("Light", e.getProperty("Light"));
 					// System.out.println(mapa.toString());
 					lista.add(mapa);
 				} catch (EntityNotFoundException e1) {

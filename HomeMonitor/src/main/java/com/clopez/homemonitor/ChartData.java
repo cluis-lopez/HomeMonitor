@@ -29,6 +29,7 @@ public class ChartData extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
+	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
 		DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
@@ -52,9 +53,9 @@ public class ChartData extends HttpServlet {
 					e = ds.get((ents.get(i)).getKey());
 					Map<String, Object> mapa = new HashMap<String, Object>();
 					mapa.put("Ts", Long.parseLong((e.getKey()).getName()));
-					mapa.put("Temp", (Double) e.getProperty("Temp"));
-					mapa.put("Hum", (Double) e.getProperty("Hum"));
-					mapa.put("Light", (Double) e.getProperty("Light"));
+					mapa.put("Temp", e.getProperty("Temp"));
+					mapa.put("Hum", e.getProperty("Hum"));
+					mapa.put("Light", e.getProperty("Light"));
 					//System.out.println(mapa.toString());
 					lista.add(mapa);
 				} catch (EntityNotFoundException e1) {

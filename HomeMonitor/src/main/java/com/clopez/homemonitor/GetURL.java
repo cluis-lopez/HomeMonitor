@@ -14,6 +14,7 @@ import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
 
 @SuppressWarnings("serial")
 public class GetURL extends HttpServlet {
+@Override
 public void doGet(HttpServletRequest req, HttpServletResponse resp)
      throws IOException {
 	final Logger log = Logger.getLogger(GetURL.class.getName());

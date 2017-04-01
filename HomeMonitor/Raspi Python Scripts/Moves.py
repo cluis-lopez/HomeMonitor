@@ -16,7 +16,7 @@ def compare(foto1, foto2):
 	img2 = cv2.GaussianBlur(img2, (21, 21), 0)
 
 	delta = cv2.absdiff(img1, img2)
-	thres = cv2.threshold(delta, 25, 255, cv2.THRESH_BINARY)[1]
+	thres = cv2.threshold(delta, 100, 255, cv2.THRESH_BINARY)[1]
 	thres = cv2.dilate(thres, None, iterations=2)
 
 	(contornos, _) = cv2.findContours(thres.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
