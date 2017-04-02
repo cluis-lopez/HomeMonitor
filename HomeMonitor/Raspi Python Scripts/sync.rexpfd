@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<rexpfd>
-    <destination path="clopez111.raspi:/home/pi/HomeMonitor"/>
-    <options createDirectoryStructure="false" createSelectedOnly="true" descriptionFilePath="/HomeMonitor/Raspi Python Scripts/sync.rexpfd" overWriteExistingFiles="false" reviewSynchronize="true" saveSettings="true"/>
-    <selectedElements>
-        <folder path="/HomeMonitor/Raspi Python Scripts"/>
-    </selectedElements>
-</rexpfd>

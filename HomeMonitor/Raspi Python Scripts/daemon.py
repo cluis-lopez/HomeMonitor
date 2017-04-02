@@ -62,6 +62,7 @@ def SendAlert (lev, typ, message, data):
     conn = httplib.HTTPConnection(URL)
     conn.request("POST", "/Alerts", params, headers)
     response = conn.getresponse()
+    logging.info(time.strftime("%D %H:%M:%S")+"\t Alerta Enviada"+pack)
     
 # Run forever. Takes a sample of temp, humidity and light each "delay" mins, then packs each sample in an array and 
 # serializes into json. Send json to the servlet.
@@ -76,12 +77,12 @@ while True:
         pack[str(i)]= {"Temp":data[0], "Hum":data[1], "Light":data[2], "Timestamp":time.time()}
         logging.info(time.strftime("%D %H:%M:%S")+"\t"+str(pack[str(i)]))
         time.sleep(DELAY)
-        if data[0] > 32.0:
+        if data[0] < 15.0 or data[0] > 32.0:
             SendAlert(1, 0, "Temperature too high", data[0])
-            logging.info(time.strftime("%D %H:%M:%S")+"\t Alerta Temperatura"+data[0])
+            logging.info(time.strftime("%D %H:%M:%S") + "\t Alerta Temperatura"+data[0])
         if data[1]< 10 or data[1]>80:
             SendAlert(1, 1, "Humidity too low", data[0])
-            logging.info(time.strftime("%D %H:%M:%S")+"\t Alerta Humedad"+data[1])
+            logging.info(time.strftime("%D %H:%M:%S") + "\t Alerta Humedad"+data[1])
         
 
         
@@ -94,7 +95,7 @@ while True:
         blobid = Image.getPict(seq, 'http://'+URL)
         pack[str(i)]["Pict"] = blobid
         seq = seq + 1
-        logging.info(time.strftime("%D %H:%M:%S")+" Adding picture with id:"+blobid)
+        logging.info(time.strftime("%D %H:%M:%S") + " Adding picture with id:"+blobid)
         
         # Now check for differences in the current picture from the previous one
         prefix = '{:02d}'.format(seq)
@@ -111,6 +112,7 @@ while True:
         
         if ret != 0:
             SendAlert(2, 2, "Movement Detected", ret)
+            logging.info(time.strftime("%D %H:%M:%S") + "\t Alerta Movimiento detectado: " + ret)
   
     
     # Make the HTTP POST to send the json 
