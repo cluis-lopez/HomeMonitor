@@ -56,7 +56,8 @@ def Sample():
 
 # Send Alerts
 def SendAlert (lev, typ, message, data):
-    params = urllib.urlencode(json.dumps({"Level":lev, "Type":typ, "Message": message, "Data":data}))
+    pack = {"Timestamp": time.time(), "Level":lev, "Type":typ, "Message": message, "Data":data}
+    params = urllib.urlencode({'Alerta':json.dumps(pack)})
     headers = {"Content-type": "application/x-www-form-urlencoded", "Accept": "text/plain"}
     conn = httplib.HTTPConnection(URL)
     conn.request("POST", "/Alerts", params, headers)
@@ -78,14 +79,14 @@ while True:
         if data[0] > 32.0:
             SendAlert(1, 0, "Temperature too high", data[0])
             logging.info(time.strftime("%D %H:%M:%S")+"\t Alerta Temperatura"+data[0])
-        if data[1]< 10 | data[1]>80:
+        if data[1]< 10 or data[1]>80:
             SendAlert(1, 1, "Humidity too low", data[0])
             logging.info(time.strftime("%D %H:%M:%S")+"\t Alerta Humedad"+data[1])
         
 
         
     # If light is enough, let's take a picture
-    if data[2]>150:
+    if data[2] > Properties.THRESHOLD_LIGHT:
         # Pics are stored as "XXimage.jpg" where XX is in the range 00 up to NUMPICS
         if seq >= NUMPICS:
             seq = 0

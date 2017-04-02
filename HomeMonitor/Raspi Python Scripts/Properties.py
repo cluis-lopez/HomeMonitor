@@ -2,7 +2,17 @@
 
 # Sample properties file. Edit and modify with your own values
 
-URL=<your app engine URL here>
-NUMSAMPLES=<the number of env. samples taken and stored in the Raspi before send to Google>
-DELAY=<delay in seconds between samples>
-NUMPICS=<number of pictures stored both in the Raspi and in Google Storage>
+# URL is the Google App Engine adress where your app is hosted
+URL=xxxx.appspot.com
+
+# The number of env. samples taken and stored in the Raspi before sending to Google
+NUMSAMPLES=10
+
+# Delay in seconds between samples
+DELAY= 300 # 5 minutes
+
+# Number of pictures stored both locally (in the Raspi) and in Google Storage
+NUMPICS=15
+
+# The minimum light in the room needed to get a clear picture (0-1023)
+THRESHOLD_LIGHT=150

@@ -29,7 +29,7 @@ def compare(foto1, foto2):
 		return 0, 0
 	else:
 		for c in contornos:
-			print "Contorno: " , contornos.index(c), " area:", cv2.contourArea(c)
+			print "Contorno:  area:", cv2.contourArea(c)
 			if cv2.contourArea(c) < 2000:
 				continue
 			(x, y, w, h) = cv2.boundingRect(c)

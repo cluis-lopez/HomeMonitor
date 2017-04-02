@@ -2,6 +2,7 @@ package com.clopez.homemonitor;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -48,22 +49,19 @@ public class Alerts extends HttpServlet {
 		sdf.setTimeZone(TimeZone.getTimeZone("Europe/Madrid"));
 
 		// Now update the datastore with the data received in the JSON
-		TreeMap<String, Object> map = gson.fromJson(datos, new TypeToken<TreeMap<String, Object>>() {
-		}.getType());
-		for (String key : map.keySet()) {
-			Map<String, Object> map2 = gson.fromJson(map.get(key).toString(), new TypeToken<Map<String, Object>>() {
-			}.getType());
-			double d = (double) map2.get("Timestamp");
-			long l = (new Double(d)).longValue() * 1000;
+		TreeMap<String, Object> map = gson.fromJson(datos, new TypeToken<TreeMap<String, Object>>() {}.getType());
+		
+		// System.out.println(map);
+		
+		double d = (double) map.get("Timestamp");
+		long l = (new Double(d)).longValue() * 1000;
 
-			Entity sample = new Entity("Alerts", String.valueOf(l));
-			sample.setProperty("Level", map2.get("Level"));
-			sample.setProperty("Message", map2.get("Message"));
-			sample.setProperty("Type", map2.get("Type"));
-			sample.setProperty("Data", map2.get("Data"));
-			ds.put(sample);
-		}
-		;
+		Entity sample = new Entity("Alerts", String.valueOf(l));
+		sample.setProperty("Level", map.get("Level"));
+		sample.setProperty("Message", map.get("Message"));
+		sample.setProperty("Type", map.get("Type"));
+		sample.setProperty("Data", map.get("Data"));
+		ds.put(sample);
 	}
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -72,6 +70,10 @@ public class Alerts extends HttpServlet {
 		DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
 		LinkedList<Map<String, Object>> lista = new LinkedList<Map<String, Object>>();
 		String error = "";
+		SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd");
+		sdf.setTimeZone(TimeZone.getTimeZone("Europe/Madrid"));
+		Date date;
+		String ts;
 
 		Query q = new Query("Alerts").setKeysOnly();
 		q.addSort("__key__", SortDirection.DESCENDING);
@@ -87,8 +89,11 @@ public class Alerts extends HttpServlet {
 													// DS first
 				try {
 					e = ds.get((ents.get(i)).getKey());
+					date = new Date(Long.parseLong((e.getKey()).getName()));
+					ts = sdf.format(date);
+					// System.out.println("Timestamp: "+ts);
 					Map<String, Object> mapa = new HashMap<String, Object>();
-					mapa.put("Ts", e.getKey().getName());
+					mapa.put("Ts", ts);
 					mapa.put("Level", e.getProperty("Level"));
 					mapa.put("Type", e.getProperty("Type"));
 					mapa.put("Message", e.getProperty("Message"));
