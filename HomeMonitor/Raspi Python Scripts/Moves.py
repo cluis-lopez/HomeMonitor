@@ -3,6 +3,10 @@
 import cv2
 import sys
 import os
+import logging
+import time
+
+logging.basicConfig(filename='HomeMonitor.log',level=logging.DEBUG)
 
 def compare(foto1, foto2):
 	img1 = cv2.imread(foto1, cv2.IMREAD_COLOR)
@@ -23,13 +27,15 @@ def compare(foto1, foto2):
 	
 	numdiff = 0
 	
-	print "Numero de contornos: ", len(contornos)
+	# print "Numero de contornos: ", len(contornos)
+	
+	logging.info(time.strftime("%D %H:%M:%S")+"\t Comparing " + foto1 + " and " + foto2 + "Detected " + str(len(contornos)) +"differences" )
 	
 	if len(contornos) == 0:
 		return 0, 0
 	else:
 		for c in contornos:
-			print "Contorno:  area:", cv2.contourArea(c)
+			# print "Contorno:  area:", cv2.contourArea(c)
 			if cv2.contourArea(c) < 2000:
 				continue
 			(x, y, w, h) = cv2.boundingRect(c)
