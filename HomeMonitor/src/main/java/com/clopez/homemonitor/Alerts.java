@@ -70,7 +70,7 @@ public class Alerts extends HttpServlet {
 		DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
 		LinkedList<Map<String, Object>> lista = new LinkedList<Map<String, Object>>();
 		String error = "";
-		SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd");
+		SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
 		sdf.setTimeZone(TimeZone.getTimeZone("Europe/Madrid"));
 		Date date;
 		String ts;
@@ -117,6 +117,7 @@ public class Alerts extends HttpServlet {
 		resp.setHeader("cache-control", "no-cache");
 		resp.getWriter().write(json);
 		resp.flushBuffer();
+		// System.out.println("Alerta: " + lista.toString());
 
 	}
 }

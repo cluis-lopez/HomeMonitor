@@ -3,8 +3,10 @@
 import numpy as np
 import cv2
 import requests
+import logging
+import time
 
-
+logging.basicConfig(filename='HomeMonitor.log',level=logging.DEBUG)
 
 def getPict(seq, URL):
     cap = cv2.VideoCapture(0)
@@ -19,6 +21,8 @@ def getPict(seq, URL):
     
     cv2.imwrite('images/'+prefix+'image.jpg', frame)
     cap.release()
+    
+    logging.info(time.strftime("%D %H:%M:%S")+"\t Saving " + prefix + "image.jpg in the Raspberry Pi"  )
     
     # After saving a local copy we send the picture lo Google Blobstore
     

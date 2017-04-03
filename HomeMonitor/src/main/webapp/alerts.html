@@ -130,18 +130,19 @@
 						var alerta = responseJson;
 						for (i in alerta)
 						{
+							var dat = alerta[i].Data;
 							switch (alerta[i].Type) {
 							case 0: // Alerta de Temeperatura
-								suffix = "ºC";
+								printdat = dat.toFixed(2) + " ºC";
 								break;
 							case 1: // Alerta de Humedad
-								suffix = "%";
+								printdat = dat.toFixed(2)+ " %";
 								break;
 							case 2: // Movimiento detectado
-								suffix ="";
+								printdat ="URL to picture when ready";
 								break;
 							} 
-						  $("#tabla").append("<tr><td>" + alerta[i].Ts + "</td><td>" + alerta[i].Level + "</td><td>" + alerta[i].Message + "</td><td>" + alerta[i].Data.toFixed(2) + " " + suffix + "</td></tr>");
+						  $("#tabla").append("<tr><td>" + alerta[i].Ts + "</td><td>" + alerta[i].Level + "</td><td>" + alerta[i].Message + "</td><td>" + printdat + "</td></tr>");
 						}
 
 					});
