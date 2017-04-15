@@ -3,11 +3,6 @@
 	<classpathentry kind="src" path="src/main/java"/>
 	<classpathentry kind="src" path="src/test/java"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
-	<classpathentry exported="true" kind="con" path="com.google.cloud.tools.eclipse.appengine.libraries/appengine-api">
-		<attributes>
-			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
@@ -27,5 +22,7 @@
 	</classpathentry>
 	<classpathentry exported="true" kind="lib" path="src/main/webapp/WEB-INF/lib/com.google.guava_20.0.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="src/main/webapp/WEB-INF/lib/joda-time-2.9.7.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/appengine-api-1.0-sdk-1.9.50.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/commons-fileupload-1.3.2.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

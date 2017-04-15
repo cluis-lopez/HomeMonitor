@@ -24,22 +24,16 @@ def getPict(seq, URL):
     
     logging.info(time.strftime("%D %H:%M:%S")+"\t Saving " + prefix + "image.jpg in the Raspberry Pi"  )
     
-    # After saving a local copy we send the picture lo Google Blobstore
+    # After saving a local copy we send the picture to Google Storage
     
-    # Get the URL to upload the last image file to Google blobstore    
-    r = requests.get(URL+'/GetURL')
-    if r.status_code != 200:
-        return "Error getting the URL"
-    bloburl = r.content
-    # print bloburl
+    filename = prefix+'image.jpg'
+
+    data = {'Picture': (filename , open('images/' + filename, 'r'), 'image/jpeg', {'Expires': '0'})}  
+    r = requests.post(URL+'/UploadPict', files = data)
+    if r.status_code != 201:
+        return "Error uploading picture"
     
-    # Now sends the last image stored also in the Raspi to the Blobstore
-    data = {'Foto': ('Foto', open('images/'+prefix+'image.jpg', 'r'), 'image/jpeg', {'Expires': '0'})}
-    response = requests.post(bloburl, files=data)
-    blobkey = response.content
-    # print  blobkey
-    
-    return blobkey
+    return r.content
 
 if __name__ == '__main__':
     k = getPict(0, 'http://homemonitor-156618.appspot.com')

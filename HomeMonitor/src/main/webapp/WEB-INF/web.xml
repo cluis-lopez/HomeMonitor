@@ -93,4 +93,14 @@
     <servlet-name>Alerts</servlet-name>
     <url-pattern>/Alerts</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>UploadPict</display-name>
+    <servlet-name>UploadPict</servlet-name>
+    <servlet-class>com.clopez.homemonitor.UploadPict</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UploadPict</servlet-name>
+    <url-pattern>/UploadPict</url-pattern>
+  </servlet-mapping>
 </web-app>

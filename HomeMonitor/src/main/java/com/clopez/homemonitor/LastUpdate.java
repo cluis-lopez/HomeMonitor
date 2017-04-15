@@ -37,7 +37,7 @@ public class LastUpdate extends HttpServlet {
 		final Logger log = Logger.getLogger(LastUpdate.class.getName());
 
 		DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
-		SimpleDateFormat sdf = new SimpleDateFormat("EEEE dd-MM-YYYY z kk:mm:ss");
+		SimpleDateFormat sdf = new SimpleDateFormat("EEEE dd-MM-YYYY z HH:mm:ss");
 		sdf.setTimeZone(TimeZone.getTimeZone("Europe/Madrid"));
 
 		// The variables that make the JSON answer
@@ -127,7 +127,7 @@ public class LastUpdate extends HttpServlet {
 		resp.setHeader("cache-control", "no-cache");
 		resp.getWriter().write(json);
 		resp.flushBuffer();
-		System.out.println("Enviado JSON LastUpdate");
-		System.out.println(data);
+		// System.out.println("Enviado JSON LastUpdate");
+		// System.out.println(data);
 	}
 }
