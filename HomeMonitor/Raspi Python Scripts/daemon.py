@@ -5,6 +5,7 @@ import time
 import urllib
 import httplib
 import logging
+import os
 import Temp
 import Light
 import Image
@@ -93,9 +94,8 @@ while True:
             seq = 0
             
         blobid = Image.getPict(seq, URL)
-        pack[str(i)]["Pict"] = blobid
-        seq = seq + 1
-        logging.info(time.strftime("%D %H:%M:%S") + " Adding picture with id:"+blobid)
+        pack[str(i)]["Pict"] = os.path.basename(blobid)
+        logging.info(time.strftime("%D %H:%M:%S") + " Adding picture with id: " + blobid)
         
         # Now check for differences in the current picture from the previous one
         prefix = '{:02d}'.format(seq)
@@ -108,13 +108,17 @@ while True:
             
         file2 = 'images/' + prefix + 'image.jpg'
         
+        logging.info(time.strftime("%D %H:%M:%S") + " Comparing " + file1 + ' with ' + file2)
+        
         ret , pict = Moves.compare(file1, file2)
         
         if ret != 0:
             SendAlert(2, 2, "Movement Detected", ret)
             logging.info(time.strftime("%D %H:%M:%S") + "\t Alerta Movimiento detectado: " + str(ret))
   
-    
+        seq = seq + 1
+        
+        
     # Make the HTTP POST to send the json 
     params = urllib.urlencode({'NumSamples': str(NUMSAMPLES), 'JSON':json.dumps(pack)})
     headers = {"Content-type": "application/x-www-form-urlencoded", "Accept": "text/plain"}
@@ -123,6 +127,6 @@ while True:
     response = conn.getresponse()
     # print response.status, response.reason
     # print response.read()
-    logging.info(time.strftime("%D %H:%M:%S")+" Sending data to main servlet")
+    logging.info(time.strftime("%D %H:%M:%S")+" Sending data to main servlet " + params)
     logging.info(time.strftime("%D %H:%M:%S")+"\t"+str(response.status)+"\t"+str(response.reason))
     logging.info(time.strftime("%D %H:%M:%S")+"\t"+str(response.read))

@@ -33,7 +33,7 @@ def getPict(seq, URL):
     if r.status_code != 201:
         return "Error uploading picture"
     
-    return 'https://storage.googleapis.com/' + r.content
+    return 'storage.googleapis.com/' + r.content
 
 if __name__ == '__main__':
     k = getPict(0, 'homemonitor-156618.appspot.com')
