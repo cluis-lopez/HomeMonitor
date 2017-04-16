@@ -1,5 +1,6 @@
 account.email=cluis.lopez@gmail.com
 eclipse.preferences.version=1
+include.optional.configuration.files=true
 project.bucket=
 project.id=homemonitor-156618
 project.previousVersion.stop=true

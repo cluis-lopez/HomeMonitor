@@ -65,7 +65,7 @@ public class UploadPict extends HttpServlet {
 					res.setStatus(HttpServletResponse.SC_CREATED);
 					res.setContentType("text/plain");
 					PrintWriter out = res.getWriter();
-					out.write("http://" + bucket + "/" + name);
+					out.write(bucket + "/" + name);
 					out.flush();
 					out.close();
 				}

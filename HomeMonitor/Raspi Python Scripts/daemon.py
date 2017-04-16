@@ -92,7 +92,7 @@ while True:
         if seq >= NUMPICS:
             seq = 0
             
-        blobid = Image.getPict(seq, 'http://'+URL)
+        blobid = Image.getPict(seq, URL)
         pack[str(i)]["Pict"] = blobid
         seq = seq + 1
         logging.info(time.strftime("%D %H:%M:%S") + " Adding picture with id:"+blobid)

@@ -28,15 +28,15 @@ def getPict(seq, URL):
     
     filename = prefix+'image.jpg'
 
-    data = {'Picture': (filename , open('images/' + filename, 'r'), 'image/jpeg', {'Expires': '0'})}  
-    r = requests.post(URL+'/UploadPict', files = data)
+    data = {URL : (filename , open('images/' + filename, 'r'), 'image/jpeg', {'Expires': '0'})}  
+    r = requests.post('http://' + URL + '/UploadPict', files = data)
     if r.status_code != 201:
         return "Error uploading picture"
     
-    return r.content
+    return 'https://storage.googleapis.com/' + r.content
 
 if __name__ == '__main__':
-    k = getPict(0, 'http://homemonitor-156618.appspot.com')
+    k = getPict(0, 'homemonitor-156618.appspot.com')
     print "Picture taken ... check under images in file 00image.jpg"
     print "Uploaded to GAE with key: "+k
     
