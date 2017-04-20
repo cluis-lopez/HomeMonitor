@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.appengine.api.appidentity.AppIdentityService;
+import com.google.appengine.api.appidentity.AppIdentityServiceFactory;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
@@ -39,6 +41,10 @@ public class LastUpdate extends HttpServlet {
 		DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
 		SimpleDateFormat sdf = new SimpleDateFormat("EEEE dd-MM-YYYY z HH:mm:ss");
 		sdf.setTimeZone(TimeZone.getTimeZone("Europe/Madrid"));
+		
+		// Create the URL to serve the pictures
+		AppIdentityService appIdentity = AppIdentityServiceFactory.getAppIdentityService();
+		String host = appIdentity.getDefaultGcsBucketName();
 
 		// The variables that make the JSON answer
 
@@ -94,7 +100,7 @@ public class LastUpdate extends HttpServlet {
 				Entity blob;
 				try {
 					blob = ds.get(urlkey);
-					url = "DownloadPicture?blob-key="+(String) blob.getProperty("Pict");
+					url = host + "/" + (String) blob.getProperty("Pict");
 					keyname = (blob.getKey()).getName();
 					date = new Date(Long.parseLong(keyname));
 					tsurl = sdf.format(date);

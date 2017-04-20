@@ -6,6 +6,7 @@ import urllib
 import httplib
 import logging
 import os
+import cv2
 import Temp
 import Light
 import Image
@@ -77,7 +78,7 @@ while True:
         # print time.strftime("%H %M %S"), " Sample: ", i, "Datos:", data
         pack[str(i)]= {"Temp":data[0], "Hum":data[1], "Light":data[2], "Timestamp":time.time()}
         logging.info(time.strftime("%D %H:%M:%S")+"\t"+str(pack[str(i)]))
-        time.sleep(DELAY)
+        
         if data[0] < 15.0 or data[0] > 32.0:
             SendAlert(1, 0, "Temperature too high", data[0])
             logging.info(time.strftime("%D %H:%M:%S") + "\t Alerta Temperatura" + str(data[0]))
@@ -85,7 +86,7 @@ while True:
             SendAlert(1, 1, "Humidity too low", data[0])
             logging.info(time.strftime("%D %H:%M:%S") + "\t Alerta Humedad" + str(data[1]))
         
-
+        time.sleep(DELAY)
         
     # If light is enough, let's take a picture
     if data[2] > Properties.THRESHOLD_LIGHT:
@@ -114,6 +115,7 @@ while True:
         
         if ret != 0:
             SendAlert(2, 2, "Movement Detected", ret)
+            cv2.imwrite('images/Alerts/'+'alert.jpg', pict)
             logging.info(time.strftime("%D %H:%M:%S") + "\t Alerta Movimiento detectado: " + str(ret))
   
         seq = seq + 1

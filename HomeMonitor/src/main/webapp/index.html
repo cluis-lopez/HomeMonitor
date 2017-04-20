@@ -236,7 +236,7 @@
 						$("#light").text(lastdata.Light);
 						$("#timestamp").text(lastdata.Timestamp);
 						$("#pictdate").text("Last Picture. Date: " + lastdata.TS_URL);
-						$("#photo").attr("src", "https://storage.googleapis.com/homemonitor-156618.appspot.com/" + lastdata.URL);
+						$("#photo").attr("src", "https://storage.googleapis.com/" + lastdata.URL);
 					});
 
 					$.get("ChartData", function(responseJson) {

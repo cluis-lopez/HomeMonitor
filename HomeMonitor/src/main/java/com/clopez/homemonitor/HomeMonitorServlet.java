@@ -33,7 +33,7 @@ public class HomeMonitorServlet extends HttpServlet {
 
 		int n = Integer.parseInt(req.getParameter("NumSamples"));
 		String datos = req.getParameter("JSON");
-		System.out.println("Numero de muestras: "+n);
+		// System.out.println("Numero de muestras: "+n);
 		
 		Gson gson = new Gson();
 		DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
