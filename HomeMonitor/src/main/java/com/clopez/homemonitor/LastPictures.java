@@ -53,41 +53,42 @@ public class LastPictures extends HttpServlet {
 		DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
 		SimpleDateFormat sdf = new SimpleDateFormat("EEEE dd-MM-YYYY z HH:mm:ss");
 		sdf.setTimeZone(TimeZone.getTimeZone("Europe/Madrid"));
-		HashMap<String, Object> map = new HashMap<String, Object>();
 		LinkedList<Map<String, Object>> lista = new LinkedList<Map<String, Object>>();
 
 		// Create the URL to serve the pictures
 		AppIdentityService appIdentity = AppIdentityServiceFactory.getAppIdentityService();
-		String host = appIdentity.getDefaultGcsBucketName();
+		String bucket = appIdentity.getDefaultGcsBucketName();
 
 		String error = "";
-		Date date;
 
 		// Get the last 9 entities of kind "Sample" with Pict != null
 
-		Query q2 = new Query("Samples");
-		q2.setFilter(FilterOperator.NOT_EQUAL.of("Pict", null));
-		List<Entity> ents = ds.prepare(q2).asList(FetchOptions.Builder.withLimit(9)); // 3x3
+		Query q = new Query("Samples");
+		q.setFilter(FilterOperator.NOT_EQUAL.of("Pict", null));
+		List<Entity> ents = ds.prepare(q).asList(FetchOptions.Builder.withLimit(9)); // 3x3
+		
 		TreeSet<Key> trees = new TreeSet<Key>(); // Now we'll store all the not
-													// nulls URLs in a TreeSet
-
+												// null url entity keys in a TreeSet
 		for (Entity e : ents) {
 			trees.add(e.getKey());
 		}
 
-		if (trees.size() == 0) {
+		int size= trees.size();
+			
+		if (size == 0) {
 			error = "No pictures stored";
 		} else {
-			for (int i = 0; i < trees.size(); i++) {
-				Key urlkey = trees.pollFirst(); // As the TreeSet is ordered,
+			for (int i = 0; i < size; i++) {
+				Key urlkey = trees.pollLast();  // As the TreeSet is ordered,
 												// this entry is the last
 												// non-null URL in the datastore
-				Entity e;
 				try {
-					e = ds.get(urlkey);
-					date = new Date(Long.parseLong(e.getKey().getName()));
+					Entity e = ds.get(urlkey);
+					Date date = new Date(Long.parseLong(e.getKey().getName()));
 					String ts = sdf.format(date);
-					map.put(ts, host + "/" + e.getProperty("Pict"));
+					HashMap<String, Object> map = new HashMap<String, Object>();
+					map.put("Ts", ts);
+					map.put("URL", bucket + "/" + e.getProperty("Pict"));
 					lista.add(map);
 				} catch (EntityNotFoundException e1) {
 					error = "Cannot locate entity for the required Picture";

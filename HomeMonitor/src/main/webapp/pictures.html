@@ -118,24 +118,28 @@
 		$(document).ready(
 				function() {
 					// Fill each row in the panel
+					k=1
 					for (i=1; i<=3; i++){
 						var inner = "";
 						for (j=1; j<=3; j++){
-							inner = inner + '<div class="col-md-4"><div class="thumbnail"><a href="fullimage"' + i+j + ' target="_blank">';
-							inner = inner + '<img src="img/loading.gif" id="foto' + i+j + '" style="width:100%"><div class="caption">';
-							inner = inner + '<p id="date"' + i+j + '></p></div></a></div></div>';
+							inner = inner + '<div class="col-md-4"><div class="thumbnail">';
+							inner = inner + '<img src="img/loading.gif" id="foto' + k + '"><div class="caption">';
+							inner = inner + '<p id="date' + k + '"></p></div></a></div></div>';
+							k++;
 						}
 						$("#row"+i).html(inner);
 					};
 					
 					$.get("LastPictures", function(responseJson) {
 						var pictures = responseJson;
-						var j = 2;
 						for (i in pictures)
 						{
 							date = pictures[i].Ts;
 							url = "http://storage.googleapis.com/" + pictures[i].URL;
-						  	$("#foto"+j).src(url);
+						  	$("#foto"+i).attr("src", url);
+						  	$("#foto"+i).append(' style="width:100%"');
+						  	$("#date"+i).text(date);
+						  	j++;
 						}
 
 					});
