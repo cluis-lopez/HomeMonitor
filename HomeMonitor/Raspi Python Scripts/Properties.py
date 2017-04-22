@@ -16,3 +16,6 @@ NUMPICS=15
 
 # The minimum light in the room needed to get a clear picture (0-1023)
 THRESHOLD_LIGHT=150
+
+# The maximum stored moving detection pictures (both local and remote)
+MAX_ALERT_PICTS=25

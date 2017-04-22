@@ -26,8 +26,10 @@ NUMPICS = Properties.NUMPICS
 # The first picture start with the prefix "00"
 seq = 0
 
-# URL is the address of the servlet at GAE to process and store the JSON
+#The first Alert picture starts also with prefix "00"
+alertpicts = 0
 
+# URL is the address of the servlet at GAE to process and store the JSON
 URL = Properties.URL
 
 logging.basicConfig(filename='HomeMonitor.log',level=logging.DEBUG)
@@ -99,24 +101,38 @@ while True:
         logging.info(time.strftime("%D %H:%M:%S") + " Adding picture with id: " + blobid)
         
         # Now check for differences in the current picture from the previous one
-        prefix = '{:02d}'.format(seq)
-        file1 = 'images/' + prefix + 'image.jpg'
+        # But we'll do only if we have more than one picture !!!
         
-        if seq == 0:
-            prefix = '{:02d}'.format(NUMPICS)
-        else:
-            prefix = '{:02d}'.format(seq-1)
+        if (len(os.listdir("/home/pi/HomeMonitor/images"))>1):
+            prefix = '{:02d}'.format(seq)
+            file1 = 'images/' + prefix + 'image.jpg'
+        
+            if seq == 0:
+                prefix = '{:02d}'.format(NUMPICS)
+            else:
+                prefix = '{:02d}'.format(seq-1)
             
-        file2 = 'images/' + prefix + 'image.jpg'
+            file2 = 'images/' + prefix + 'image.jpg'
         
-        logging.info(time.strftime("%D %H:%M:%S") + " Comparing " + file1 + ' with ' + file2)
+            logging.info(time.strftime("%D %H:%M:%S") + " Comparing " + file1 + ' with ' + file2)
         
-        ret , pict = Moves.compare(file1, file2)
+            ret , pict = Moves.compare(file1, file2)
         
-        if ret != 0:
-            SendAlert(2, 2, "Movement Detected", ret)
-            cv2.imwrite('images/Alerts/'+'alert.jpg', pict)
-            logging.info(time.strftime("%D %H:%M:%S") + "\t Alerta Movimiento detectado: " + str(ret))
+            if ret != 0:
+                filename = '{:02d}'.format(alertpicts) + 'alert.jpg'
+                cv2.imwrite('images/Alerts/' + filename, pict)
+                
+                # Send the picture to the alerts bucket
+                data = {URL + 'Alerts' : (filename , open('images/Alerts' + filename, 'r'), 'image/jpeg', {'Expires': '0'})}  
+                r = requests.post('http://' + URL + '/UploadPict', files = data)
+                if r.status_code != 201:
+                    return "Error uploading picture"
+                
+                SendAlert(2, 2, "Movement Detected", r)
+                logging.info(time.strftime("%D %H:%M:%S") + "\t Alerta Movimiento detectado: " + str(ret))
+                alertpicts = alertpicts + 1
+                if (alertpicts >= Properties.MAX_ALERT_PICTS):
+                    alertpicts = 0
   
         seq = seq + 1
         
