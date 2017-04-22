@@ -7,6 +7,7 @@ import httplib
 import logging
 import os
 import cv2
+import requests
 import Temp
 import Light
 import Image
@@ -103,16 +104,16 @@ while True:
         # Now check for differences in the current picture from the previous one
         # But we'll do only if we have more than one picture !!!
         
-        if (len(os.listdir("/home/pi/HomeMonitor/images"))>1):
+        if (len(os.listdir("Images/"))>1):
             prefix = '{:02d}'.format(seq)
-            file1 = 'images/' + prefix + 'image.jpg'
+            file1 = 'Images/' + prefix + 'image.jpg'
         
             if seq == 0:
-                prefix = '{:02d}'.format(NUMPICS)
+                prefix = '{:02d}'.format(NUMPICS-1)
             else:
                 prefix = '{:02d}'.format(seq-1)
             
-            file2 = 'images/' + prefix + 'image.jpg'
+            file2 = 'Images/' + prefix + 'image.jpg'
         
             logging.info(time.strftime("%D %H:%M:%S") + " Comparing " + file1 + ' with ' + file2)
         
@@ -120,20 +121,22 @@ while True:
         
             if ret != 0:
                 filename = '{:02d}'.format(alertpicts) + 'alert.jpg'
-                cv2.imwrite('images/Alerts/' + filename, pict)
+                cv2.imwrite('Alerts/' + filename, pict)
                 
                 # Send the picture to the alerts bucket
-                data = {URL + 'Alerts' : (filename , open('images/Alerts' + filename, 'r'), 'image/jpeg', {'Expires': '0'})}  
+                data = {URL + '/Alerts' : (filename , open('Alerts/' + filename, 'r'), 'image/jpeg', {'Expires': '0'})}  
                 r = requests.post('http://' + URL + '/UploadPict', files = data)
-                if r.status_code != 201:
-                    return "Error uploading picture"
-                
-                SendAlert(2, 2, "Movement Detected", r)
-                logging.info(time.strftime("%D %H:%M:%S") + "\t Alerta Movimiento detectado: " + str(ret))
-                alertpicts = alertpicts + 1
-                if (alertpicts >= Properties.MAX_ALERT_PICTS):
-                    alertpicts = 0
-  
+                print "Retorno de UploadPict: " + r.content
+                if r.status_code == 201:
+                    SendAlert(2, 2, "Movement Detected", r.content)
+                    logging.info(time.strftime("%D %H:%M:%S") + "\t Alerta Movimiento detectado: " + str(ret))
+                    alertpicts = alertpicts + 1
+                    if (alertpicts >= Properties.MAX_ALERT_PICTS):
+                        alertpicts = 0
+                else:
+                    logging.info(time.strftime("%D %H:%M:%S") + "\t No se puede enviar la alerta")
+        else:
+            logging.info(time.strftime("%D %H:%M:%S") + "\t No hay ficheros para comparar movimientos")
         seq = seq + 1
         
         

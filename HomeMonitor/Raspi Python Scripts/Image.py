@@ -19,7 +19,7 @@ def getPict(seq, URL):
     
     prefix = '{:02d}'.format(seq)
     
-    cv2.imwrite('images/'+prefix+'image.jpg', frame)
+    cv2.imwrite('Images/'+prefix+'image.jpg', frame)
     cap.release()
     
     logging.info(time.strftime("%D %H:%M:%S")+"\t Saving " + prefix + "image.jpg in the Raspberry Pi"  )
@@ -28,7 +28,7 @@ def getPict(seq, URL):
     
     filename = prefix+'image.jpg'
 
-    data = {URL : (filename , open('images/' + filename, 'r'), 'image/jpeg', {'Expires': '0'})}  
+    data = {URL : (filename , open('Images/' + filename, 'r'), 'image/jpeg', {'Expires': '0'})}  
     r = requests.post('http://' + URL + '/UploadPict', files = data)
     if r.status_code != 201:
         return "Error uploading picture"
