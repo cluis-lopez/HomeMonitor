@@ -123,6 +123,25 @@
     </div>
 
 </div>
+
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" id="modaltitle"></h4>
+        </div>
+        <div class="modal-body">
+          <img src="loading.gif" class="img-responsive" id="modalpic">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
 	<script type="text/javascript">
 		$(document).ready(
 				function() {
@@ -130,8 +149,8 @@
 						var alerta = responseJson;
 						for (i in alerta)
 						{
-							var dat = alerta[i].Data;
-							switch (alerta[i].Type) {
+							var dat = alerta[i-1].Data;
+							switch (alerta[i-1].Type) {
 							case 0: // Alerta de Temeperatura
 								printdat = dat.toFixed(2) + " ºC";
 								break;
@@ -139,13 +158,21 @@
 								printdat = dat.toFixed(2)+ " %";
 								break;
 							case 2: // Movimiento detectado
-								printdat ="URL to picture when ready";
+								printdat = '<div class="col-md-4"><div class="thumbnail">';
+								printdat = printdat + '<a href="#myModal" data-toggle="modal" data-target="#myModal">'
+								printdat = printdat + '<img src="https://storage.googleapis.com/' + dat + '"></a></div></div';
 								break;
 							} 
-						  $("#tabla").append("<tr><td>" + alerta[i].Ts + "</td><td>" + alerta[i].Level + "</td><td>" + alerta[i].Message + "</td><td>" + printdat + "</td></tr>");
+						  $("#tabla").append("<tr class='linea' <td>" + alerta[i-1].Ts + "</td><td>" + alerta[i-1].Level + "</td><td>" + alerta[i-1].Message + "</td><td>" + printdat + "</td></tr>");
 						}
 
 					});
+					
+				    $(".linea").click(function(e) {
+				    	  $("#modaltitle").html($($(this).children("td")[0]).html());
+				    	  $("#modalpic").attr("src", $($($(this).children("td")[3]).find("img")[0]).attr("src"));
+				          $("#myModal").modal("show");
+				    });
 				});
 </script>
 </body>
