@@ -133,7 +133,7 @@
           <h4 class="modal-title" id="modaltitle"></h4>
         </div>
         <div class="modal-body">
-          <img src="loading.gif" class="img-responsive" id="modalpic">
+          <img src="img/loading.gif" class="img-responsive" id="modalpic">
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -149,8 +149,8 @@
 						var alerta = responseJson;
 						for (i in alerta)
 						{
-							var dat = alerta[i-1].Data;
-							switch (alerta[i-1].Type) {
+							var dat = alerta[i].Data;
+							switch (alerta[i].Type) {
 							case 0: // Alerta de Temeperatura
 								printdat = dat.toFixed(2) + " ºC";
 								break;
@@ -159,21 +159,20 @@
 								break;
 							case 2: // Movimiento detectado
 								printdat = '<div class="col-md-4"><div class="thumbnail">';
-								printdat = printdat + '<a href="#myModal" data-toggle="modal" data-target="#myModal">'
-								printdat = printdat + '<img src="https://storage.googleapis.com/' + dat + '"></a></div></div';
+								printdat = printdat + '<img src="https://storage.googleapis.com/' + dat + '"></div></div';
 								break;
 							} 
-						  $("#tabla").append("<tr class='linea' <td>" + alerta[i-1].Ts + "</td><td>" + alerta[i-1].Level + "</td><td>" + alerta[i-1].Message + "</td><td>" + printdat + "</td></tr>");
+						  $("#tabla").append("<tr class='linea'><td class='col-md-2'>" + alerta[i].Ts + "</td><td class='col-md-2'>" + alerta[i].Level + "</td><td class='col-md-2'>" + alerta[i].Message + "</td><td class='col-md-6'>" + printdat + "</td></tr>");
 						}
 
 					});
-					
-				    $(".linea").click(function(e) {
-				    	  $("#modaltitle").html($($(this).children("td")[0]).html());
-				    	  $("#modalpic").attr("src", $($($(this).children("td")[3]).find("img")[0]).attr("src"));
-				          $("#myModal").modal("show");
-				    });
 				});
+		
+		$(".linea").click(function(e) {
+	    	  $("#modaltitle").html($($(this).children("td")[0]).html());
+	    	  $("#modalpic").attr("src", $($($(this).children("td")[3]).find("img")[0]).attr("src"));
+	          $("#myModal").modal("show");
+	    });
 </script>
 </body>
 </html>
