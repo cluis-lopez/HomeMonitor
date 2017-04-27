@@ -64,7 +64,7 @@ public class LastPictures extends HttpServlet {
 		// Get the last 9 entities of kind "Sample" with Pict != null
 
 		Query q = new Query("Samples");
-		q.setFilter(FilterOperator.NOT_EQUAL.of("Pict", null));
+		q.setFilter(FilterOperator.NOT_EQUAL.of("Pict", null)); // Change this
 		List<Entity> ents = ds.prepare(q).asList(FetchOptions.Builder.withLimit(9)); // 3x3
 		
 		TreeSet<Key> trees = new TreeSet<Key>(); // Now we'll store all the not
