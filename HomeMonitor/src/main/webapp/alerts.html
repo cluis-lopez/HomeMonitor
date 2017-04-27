@@ -162,17 +162,16 @@
 								printdat = printdat + '<img src="https://storage.googleapis.com/' + dat + '"></div></div';
 								break;
 							} 
-						  $("#tabla").append("<tr class='linea'><td class='col-md-2'>" + alerta[i].Ts + "</td><td class='col-md-2'>" + alerta[i].Level + "</td><td class='col-md-2'>" + alerta[i].Message + "</td><td class='col-md-6'>" + printdat + "</td></tr>");
+						  $("#tabla").append("<tr onClick='modalup(this)'><td class='col-md-2'>" + alerta[i].Ts + "</td><td class='col-md-2'>" + alerta[i].Level + "</td><td class='col-md-2'>" + alerta[i].Message + "</td><td class='col-md-6'>" + printdat + "</td></tr>");
 						}
 
 					});
 				});
-		
-		$(".linea").click(function(e) {
-	    	  $("#modaltitle").html($($(this).children("td")[0]).html());
-	    	  $("#modalpic").attr("src", $($($(this).children("td")[3]).find("img")[0]).attr("src"));
-	          $("#myModal").modal("show");
-	    });
+		   function modalup(e){
+			   $("#modaltitle").html($($(e).children("td")[0]).html());
+			   $("#modalpic").attr("src", $($($(e).children("td")[3]).find("img")[0]).attr("src"));
+			   $("#myModal").modal("show");
+		   };
 </script>
 </body>
 </html>
