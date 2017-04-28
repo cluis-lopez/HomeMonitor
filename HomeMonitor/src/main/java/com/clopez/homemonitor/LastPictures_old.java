@@ -27,19 +27,18 @@ import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.FilterOperator;
-import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.gson.Gson;
 
 /**
  * Servlet implementation class LastPictures
  */
-public class LastPictures extends HttpServlet {
+public class LastPictures_old extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public LastPictures() {
+	public LastPictures_old() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -65,24 +64,21 @@ public class LastPictures extends HttpServlet {
 		// Get the last 9 entities of kind "Sample" with Pict != null
 
 		Query q = new Query("Samples");
-		q.addSort("__key__", SortDirection.DESCENDING);
-		PreparedQuery pq = ds.prepare(q);
-		// List<Entity> ents = ds.prepare(q).asList(FetchOptions.Builder.withLimit(9)); // 3x3
+		q.setFilter(FilterOperator.NOT_EQUAL.of("Pict", null)); // Change this
+		List<Entity> ents = ds.prepare(q).asList(FetchOptions.Builder.withLimit(9)); // 3x3
 		
 		TreeSet<Key> trees = new TreeSet<Key>(); // Now we'll store all the not
 												// null url entity keys in a TreeSet
-		for (Entity e : pq.asIterable()) {
-			if (e.getProperty("Pict") != null){
-				trees.add(e.getKey());
-			}
+		for (Entity e : ents) {
+			trees.add(e.getKey());
 		}
 
-		int size= trees.size(); // size = num of not null Pict (ej. Samples with image URL)
+		int size= trees.size();
 			
 		if (size == 0) {
 			error = "No pictures stored";
 		} else {
-			for (int i = 0; (i < size && i < 9); i++) {
+			for (int i = 0; i < size; i++) {
 				Key urlkey = trees.pollLast();  // As the TreeSet is ordered,
 												// this entry is the last
 												// non-null URL in the datastore
