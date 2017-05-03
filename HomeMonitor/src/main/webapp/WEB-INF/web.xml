@@ -72,4 +72,14 @@
     <servlet-name>LastPictures</servlet-name>
     <url-pattern>/LastPictures</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>Test</display-name>
+    <servlet-name>Test</servlet-name>
+    <servlet-class>com.clopez.homemonitor.Test</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Test</servlet-name>
+    <url-pattern>/Test</url-pattern>
+  </servlet-mapping>
 </web-app>

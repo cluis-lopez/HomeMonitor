@@ -11,14 +11,7 @@ HW needed:
 	
 The application:
 
-	- Raspi Python scripts: download under any directory in your RaspPi. You'll need in addition the libraries to drive thee DHT22 from Adafruit.
-	
-		- Temp.py: to read temp & humidity from the DTH22 sensor
-		- Light.py: to read light level in your room using a simple photoresistor and one cheap A/D chip like the MCP3008
-		- Image.py: to take pictures from the webcam, analyze movement and (to be done) identify faces and send video
-		- daemon.py: the controller script that calls the above, formats data and sends it to the cloud
+	- Raspi Python scripts: download under any directory in your RaspPi. You'll need in addition the libraries to drive thee DHT22 from Adafruit (https://github.com/adafruit/Adafruit_Python_DHT). More details in the README file under the scripts directory
 		
 		
-	- The web application: to deploy in your favorite cloud provider. Google App Engine is my cloud of choice here:
-	
-		- HomeMonitorServlet.java: reads the JSON sent by the Python daemon in the Rasp and stores it in Google Datastore. Makes some cleaning of the datastore if needed
+	- The web application: to deploy in Google App. Engine. The app used extensively the Google Datastore and Cloud Storage so if you plan to use a different provider APIs will change for sure. More details about Java servlets used under the webapp directory
