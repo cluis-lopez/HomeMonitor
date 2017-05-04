@@ -47,41 +47,39 @@ public class HomeMonitorServlet extends HttpServlet {
 		q.addSort("__key__", SortDirection.ASCENDING);
 		List<Entity> ents = ds.prepare(q).asList(FetchOptions.Builder.withDefaults());
 		
-		System.out.println("Numero de entidades:" + ents.size());
+		//System.out.println("Numero de entidades:" + ents.size());
 
 		if (ents.size() > 100) {
 
-			for (int i = ents.size(); i == 100 ; i--) {
+			for (int i = 0; i < ents.size()-100 ; i++) {
 				Date date = new Date(Long.parseLong(((ents.get(i)).getKey()).getName()));
 				String ts = sdf.format(date);
 				double temp = 0.0;
 				double hum = 0.0;
 				double light = 0.0;
-				System.out.println("Bucle: " + i );
 				// Retrieve the values of this "older" entry in the datastore
 				try {
 					Entity ent = ds.get(ents.get(i).getKey());
 					temp = (double) ent.getProperty("Temp");
 					hum = (double) ent.getProperty("Hum");
 					light = (double) ent.getProperty("Light");
-					System.out.println("Entradas older");
-					System.out.println("Key: "+ ent.getKey());
+					//System.out.println("Entradas older");
+					//System.out.println("Key: "+ ent.getKey());
 				} catch (EntityNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 
-				/**
 				// Check if an Historic entity with this date already exists
 				Key k = KeyFactory.createKey("Historic", ts);
 				Query tq = new Query("Historic").setKeysOnly().setFilter(FilterOperator.EQUAL.of("__key__", k) );
 				Entity hist = ds.prepare(tq).asSingleEntity();
 				
-				System.out.println("Encontrada la entidad Historic: " + hist);
+				//System.out.println("Encontrada la entidad Historic: " + hist);
 				
 				if (hist == null){
 					// No entry with that date so we create one
-					System.out.println("Creando la entidad con Temp:" + temp);
+					//System.out.println("Creando la entidad con Temp:" + temp);
 					hist = new Entity("Historic", ts);
 					hist.setProperty("Temp", temp);
 					hist.setProperty("Hum", hum);
@@ -93,7 +91,6 @@ public class HomeMonitorServlet extends HttpServlet {
 				} else {
 					// There's already an entry in the datastore
 					// for that date
-					// to check if something changes
 					try {
 						Entity e = ds.get(hist.getKey());
 						double temp2 = (double) e.getProperty("Temp");
@@ -108,20 +105,9 @@ public class HomeMonitorServlet extends HttpServlet {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-				} **/
+				} 
 			}
 		}
-
-		/** Query tq = new Query("Historic").setKeysOnly().setFilter(FilterOperator.EQUAL.of("__key__", ts) );
-			Entity e = ds.prepare(tq).asSingleEntity(); // Chequeamos si ya existe una entidad con ese "key" que corresponde a un día del año
-
-			if (e != null){
-				temp = (Double) e.getProperty("Temp");
-				light = (Double) e.getProperty("Light");
-				hum = (Double) e.getProperty("Hum");
-
-			} **/
-
 
 		// Now update the datastore with the data received in the JSON 
 		TreeMap<String, Object> map = gson.fromJson(datos, new TypeToken<TreeMap<String, Object>>(){}.getType());
