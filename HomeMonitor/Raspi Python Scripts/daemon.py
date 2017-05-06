@@ -35,6 +35,16 @@ URL = Properties.URL
 
 logging.basicConfig(filename='HomeMonitor.log',level=logging.DEBUG)
 
+# Cleanup directories
+
+# Remove picts in Inages and Alerts directories
+
+for i in os.listdir("Images"):
+    os.remove("Images/"+i)
+    
+for i in os.listdir("Alerts"):
+    os.remove("Alerts/"+i)
+
 def Sample():
     """ No args. Get a sample of Temp+Humidity & Light. Discard it. Wait half a second
     """
