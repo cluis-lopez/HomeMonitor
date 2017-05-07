@@ -2,7 +2,7 @@
 
 # Sample properties file. Edit and modify with your own values
 
-# URL is the Google App Engine adress where your app is hosted
+# URL is the Google App Engine address where your app is hosted
 URL=xxxx.appspot.com
 
 # The number of env. samples taken and stored in the Raspi before sending to Google

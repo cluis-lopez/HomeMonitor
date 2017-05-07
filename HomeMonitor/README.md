@@ -11,7 +11,12 @@ HW needed:
 	
 The application:
 
-	- Raspi Python scripts: download under any directory in your RaspPi. You'll need in addition the libraries to drive thee DHT22 from Adafruit (https://github.com/adafruit/Adafruit_Python_DHT). More details in the README file under the scripts directory
+	- Raspi Python scripts: download under any directory in your RaspPi.
+	You'll need in addition the libraries to drive the DHT22 from Adafruit (https://github.com/adafruit/Adafruit_Python_DHT).
+	More details in the README file under the scripts directory
 		
 		
-	- The web application: to deploy in Google App. Engine. The app used extensively the Google Datastore and Cloud Storage so if you plan to use a different provider APIs will change for sure. More details about Java servlets used under the webapp directory
+	- The web application: the java classes to deploy in Google App. Engine.
+	The app used extensively the Google Datastore and Cloud Storage so if you plan to use
+	a different cloud provider APIs will change for sure. More details about Java servlets
+	under the webapp directory
