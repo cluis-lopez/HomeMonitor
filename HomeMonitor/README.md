@@ -12,7 +12,7 @@ HW needed:
 The application:
 
 	- Raspi Python scripts: download under any directory in your RaspPi.
-	You'll need in addition the libraries to drive the DHT22 from [Adafruit] (https://github.com/adafruit/Adafruit_Python_DHT)
+	You'll need in addition the libraries to drive the DHT22 from [Adafruit] (https://github.com/adafruit/Adafruit_Python_DHT/)
 	More details in the README file under the scripts directory
 		
 		
