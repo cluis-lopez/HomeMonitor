@@ -20,5 +20,6 @@ a picture to Cloud Storage showing the differences
 - daemon.py: the main controller script. Runs forever and samples the environment
 according with the rules of the Properties.py file. Logs into <HOME_DIR>/HomeMonitor.log 
 and should be launched as:
-
+```
 	# nohup python daemon.py 2>&1 &
+```
