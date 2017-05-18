@@ -13,7 +13,7 @@ The application:
 
 - Raspi Python scripts: download under any directory in your RaspPi.
 You'll need in addition the libraries to drive the DHT22 from [Adafruit](https://github.com/adafruit/Adafruit_Python_DHT/)
-More details in the README file under the scripts directory
+More details in the [README file](https://github.com/cluis-lopez/HomeMonitor/blob/master/HomeMonitor/Raspi%20Python%20Scripts/README.md) under the scripts directory
 		
 - The web application: the java classes to deploy in Google App. Engine.
 The app used extensively the Google Datastore and Cloud Storage so if you plan to use
