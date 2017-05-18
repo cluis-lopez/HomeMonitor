@@ -1,9 +1,9 @@
 The client side of the app. It's made of 5 HTML files, one per page of the application.
 All include JQuery and Bootstrap frameworks:
 
-- index.html: the landing page that shows the dashboard with the last sample stored at Google,
+- **index.html**: the landing page that shows the dashboard with the last sample stored at Google,
 the last picture and a chart showing the evolution of the stored data. Uses javascript
-[MorrisCharts](http://morrisjs.github.io/morris.js/) for chartingThey and makes two AJAX calls to
+[MorrisCharts](http://morrisjs.github.io/morris.js/) for charting and makes two AJAX calls to
 backend servlets to retrieve the data packed into JSON objects:
 
   - LastUpdate: [see LastUpdate.java](https://github.com/cluis-lopez/HomeMonitor/blob/master/HomeMonitor/src/main/java/com/clopez/homemonitor/LastUpdate.java)
