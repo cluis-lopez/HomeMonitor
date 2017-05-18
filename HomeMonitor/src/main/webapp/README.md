@@ -11,3 +11,15 @@ backend servlets to retrieve the data packed into JSON objects:
   including (if any) the URL of the last pictured stored in Google Storage
   - ChartData: [see ChartData.java](https://github.com/cluis-lopez/HomeMonitor/blob/master/HomeMonitor/src/main/java/com/clopez/homemonitor/ChartData.java)
   retrieves the last samples (limit is 100) packed in JSON to create the charts
+  
+- **alerts.html** : shows the last alerts reported (temp or humidity out of range, movement detected)
+uses AJAX to get the list of alerts. [See Alerts.java](https://github.com/cluis-lopez/HomeMonitor/blob/master/HomeMonitor/src/main/java/com/clopez/homemonitor/Alerts.java)
+
+- **pictures.html** : shows the last 9 pictures (if any) stored in Google Storage. Makes an AJAX 
+call to [LastPicures.java](https://github.com/cluis-lopez/HomeMonitor/blob/master/HomeMonitor/src/main/java/com/clopez/homemonitor/LastPictures.java)
+to get the URLs
+
+- **historic.html** : shows the acumulate data for older samples (stored as Historic entities in 
+the Datastore). Makes AJAX call to [GetHistoric.java](https://github.com/cluis-lopez/HomeMonitor/blob/master/HomeMonitor/src/main/java/com/clopez/homemonitor/GetHistoric.java)
+
+- **about.html** : just to show off
