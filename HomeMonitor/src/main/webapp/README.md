@@ -15,7 +15,7 @@ backend servlets to retrieve the data packed into JSON objects:
 - **alerts.html** : shows the last alerts reported (temp or humidity out of range, movement detected)
 uses AJAX to get the list of alerts. [See Alerts.java](https://github.com/cluis-lopez/HomeMonitor/blob/master/HomeMonitor/src/main/java/com/clopez/homemonitor/Alerts.java)
 
-- **pictures.html** : shows the last 9 pictures (if any) stored in Google Storage. Makes an AJAX 
+- **pictures.html** : shows the last pictures (limit 9) stored in Google Storage. Makes an AJAX 
 call to [LastPicures.java](https://github.com/cluis-lopez/HomeMonitor/blob/master/HomeMonitor/src/main/java/com/clopez/homemonitor/LastPictures.java)
 to get the URLs
 
